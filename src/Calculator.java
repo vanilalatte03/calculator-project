@@ -15,16 +15,24 @@ public class Calculator {
                 if(cnt2.equals("n")){
                     System.out.println("첫 번째 숫자를 입력하세요: ");
                     num1 = scanner.nextDouble();
-                    System.out.println("연산자를 입력하세요 (+, -, *, /): ");
+                    System.out.println("연산자를 입력하세요 (+, -, *, /, %, ^, sqrt): ");
                     operator = scanner.next();
-                    System.out.println("두 번째 숫자를 입력하세요: ");
-                    num2 = scanner.nextDouble();
+                    if (!operator.equals("sqrt")) {
+                        System.out.println("두 번째 숫자를 입력하세요: ");
+                        num2 = scanner.nextDouble();
+                    } else {
+                        num2 = 0;
+                    }
                 } else if(cnt2.equals("y")){ //이전 결과 이용
                     num1 = result;
-                    System.out.println("연산자를 입력하세요 (+, -, *, /): ");
+                    System.out.println("연산자를 입력하세요 (+, -, *, /, %, ^, sqrt): ");
                     operator = scanner.next();
-                    System.out.println("숫자를 입력하세요: ");
-                    num2 = scanner.nextDouble();
+                    if (!operator.equals("sqrt")) {
+                        System.out.println("숫자를 입력하세요: ");
+                        num2 = scanner.nextDouble();
+                    } else {
+                        num2 = 0;
+                    }
                 }
 
                 cal(num1,operator,num2);
@@ -69,6 +77,22 @@ public class Calculator {
                 }
                 result = n1 / n2;
                 break;
+            case "%":
+                if (n2 == 0) {
+                    throw new ArithmeticException("0으로 나눈 나머지는 구할 수 없습니다.");
+                }
+                result = n1 % n2;
+                break;
+            case "^":
+                result = Math.pow(n1, n2);
+                break;
+            case "sqrt":
+                if (n1 < 0) {
+                    throw new IllegalArgumentException("음수의 제곱근은 실수 범위에서 구할 수 없습니다.");
+                }
+                result = Math.sqrt(n1);
+                break;
+
             default:
                 throw new IllegalArgumentException("지원하지 않는 연산자입니다.");
         }
