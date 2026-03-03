@@ -19,7 +19,7 @@ public class Calculator {
                     operator = scanner.next();
                     System.out.println("두 번째 숫자를 입력하세요: ");
                     num2 = scanner.nextDouble();
-                } else if(cnt2.equals("y")){
+                } else if(cnt2.equals("y")){ //이전 결과 이용
                     num1 = result;
                     System.out.println("연산자를 입력하세요 (+, -, *, /): ");
                     operator = scanner.next();
@@ -28,6 +28,7 @@ public class Calculator {
                 }
 
                 cal(num1,operator,num2);
+
                 System.out.println("결과: " + result);
                 System.out.println("계속 계산하시겠습니까? (y/n): ");
                 cnt1 = scanner.next().toLowerCase();
@@ -36,9 +37,12 @@ public class Calculator {
                     System.out.println("이전 결과(" + result + ")를 사용하시겠습니까? (y/n):");
                     cnt2 = scanner.next().toLowerCase();
                 }
+
             } catch (InputMismatchException e) {
                 System.out.println("숫자를 입력해주세요.");
                 scanner.nextLine();
+            } catch (ArithmeticException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
 
         }
@@ -61,13 +65,12 @@ public class Calculator {
                 break;
             case "/":
                 if (n2 == 0) {
-                    System.out.println("0으로 나눌 수 없습니다.");
-                    return;
+                    throw new ArithmeticException("0으로 나눌 수 없습니다.");
                 }
                 result = n1 / n2;
                 break;
             default:
-                System.out.println("지원하지 않는 연산자입니다.");
+                throw new IllegalArgumentException("지원하지 않는 연산자입니다.");
         }
 
     }
