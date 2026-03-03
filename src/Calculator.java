@@ -1,11 +1,50 @@
 import java.util.*;
 
 public class Calculator {
-    private static double num1, num2, result;
+    private static Double result;
+    private static final List<Double> history = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int menu = 1;
+        try {
+            while (menu != 0){
+                System.out.println("\n=== 계산기 메뉴 ===");
+                System.out.println("1. 계산하기");
+                System.out.println("2. 계산 이력 보기");
+                System.out.println("3. 이력 지우기");
+                System.out.println("0. 종료");
+                System.out.print("선택: ");
+                Scanner scanner = new Scanner(System.in);
+                menu = scanner.nextInt();
+
+                switch (menu){
+                    case 1: //계산기
+                        calMain();
+                        break;
+                    case 2: //이력 확인
+                        printHistory();
+                        break;
+                    case 3: //이력 삭제
+                        clearHistory();
+                        break;
+                    case 0: //프로그램 종료
+                        System.out.println("계산기를 종료합니다.");
+                        scanner.close();
+                        return;
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("숫자를 입력해주세요.");
+            scanner.nextLine();
+        }
+
+    }
+
+    //계산기
+    private static void calMain(){
         //재실행 체크
+        double num1 = 0, num2 = 0;
         String cnt1 = "y", cnt2 = "n";
         String operator = "";
         System.out.println("=== Java 계산기 ===");
@@ -38,6 +77,7 @@ public class Calculator {
                 cal(num1,operator,num2);
 
                 System.out.println("결과: " + result);
+                history.add(result);
                 System.out.println("계속 계산하시겠습니까? (y/n): ");
                 cnt1 = scanner.next().toLowerCase();
 
@@ -54,9 +94,6 @@ public class Calculator {
             }
 
         }
-
-        System.out.println("계산기를 종료합니다.");
-        scanner.close();
     }
 
     //계산 메서드
@@ -92,11 +129,29 @@ public class Calculator {
                 }
                 result = Math.sqrt(n1);
                 break;
-
             default:
                 throw new IllegalArgumentException("지원하지 않는 연산자입니다.");
         }
 
+    }
+
+    //계산 기록 출력
+    private static void printHistory() {
+        System.out.println("=== 계산 이력 ===");
+        if (history.isEmpty()) {
+            System.out.println("이력이 없습니다.");
+            return;
+        }
+
+        for (int i = 0; i < history.size(); i++) {
+            System.out.println((i + 1) + ". " + history.get(i));
+        }
+    }
+
+    //계산 기록 삭제
+    private static void clearHistory() {
+        history.clear();
+        System.out.println("이력을 모두 삭제했습니다.");
     }
 
 }
