@@ -43,7 +43,6 @@ public class Calculator {
 
     //계산기
     private static void calMain(){
-        //재실행 체크
         double num1 = 0, num2 = 0;
         String cnt1 = "y", cnt2 = "n";
         String operator = "";
@@ -76,16 +75,30 @@ public class Calculator {
 
                 cal(num1,operator,num2);
 
-                System.out.println("결과: " + result);
+                System.out.println("결과: " + num1 + " " + operator + " " + num2 + " = " + result);
                 history.add(result);
-                System.out.println("계속 계산하시겠습니까? (y/n): ");
-                cnt1 = scanner.next().toLowerCase();
+                while (true) {
+                    System.out.println("계속 계산하시겠습니까? (y/n): ");
+                    cnt1 = scanner.next().toLowerCase();
 
-                if(cnt1.equals("y")){
-                    System.out.println("이전 결과(" + result + ")를 사용하시겠습니까? (y/n):");
-                    cnt2 = scanner.next().toLowerCase();
+                    if (cnt1.equals("y") || cnt1.equals("n")) {
+                        break;
+                    }
+                    System.out.println("잘못된 입력입니다. 'y' 또는 'n'만 입력해주세요.");
                 }
 
+                if (cnt1.equals("y")) {
+                    while (true) {
+                        System.out.println("이전 결과(" + result + ")를 사용하시겠습니까? (y/n):");
+                        cnt2 = scanner.next().toLowerCase();
+
+                        if (cnt2.equals("y") || cnt2.equals("n")) {
+                            break;
+                        }
+
+                        System.out.println("잘못된 입력입니다. 'y' 또는 'n'만 입력해주세요.");
+                    }
+                }
             } catch (InputMismatchException e) {
                 System.out.println("숫자를 입력해주세요.");
                 scanner.nextLine();
