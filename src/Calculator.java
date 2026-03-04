@@ -15,7 +15,6 @@ public class Calculator {
                 System.out.println("3. 이력 지우기");
                 System.out.println("0. 종료");
                 System.out.print("선택: ");
-                Scanner scanner = new Scanner(System.in);
                 menu = scanner.nextInt();
 
                 switch (menu){
